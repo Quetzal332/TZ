@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script></head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/demo/banks">Bank</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+        </thead>
+        <tbody>
+        <tr><td>
+            <form name="offers"  th:action="@{'/creditOffers/create/' + ${offer.id} }"
+                  th:object="${offer}" method="post" class="form-horizontal">
+
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{id}" placeholder="id" type="hidden" class="form-control"/>
+                </div>
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{client}"   type="hidden"  class="form-control"/>
+                </div>
+
+                <div class="form-group row">
+
+                    <label class="form-group col-md-2">Select credit: </label>
+                    <select
+                    name="cred" class="form-control col-md-4" th:field="*{credit}">
+                        <option th:each="credit : ${offer.getClient().getBank().credits}" th:value="${credit.id}" th:text="${credit.name} + ' limit- ' + ${credit.creditLimit} + ' ' +  ${credit.interestRate} + '%'">
+                        </option>
+                    </select>
+                    <a class="btn btn-outline-danger btn-sm" role="button" th:href="@{'/credits/create/' + ${offer.getClient().getBank().id}}">создать новый кредит</a>
+                    <br>
+                </div>
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input  name="credSum" th:type="number" th:field="*{creditSum}"
+                           th:min="1000"   placeholder="сумма" required class="form-control"/>
+                    <div style="color: red" th:if="${#fields.hasErrors('creditSum')}" th:errors="*{creditSum}">CredSum Error </div>
+                </div>
+
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input type="number" th:min="1" th:max="360" th:field="*{month}" placeholder="месяцы" required class="form-control"/>
+                </div>
+
+                <div style="margin-inline: auto" class="form-group">
+                    <div class="col-md-auto controls">
+                        <a class="btn btn-outline-danger btn-sm" role="button"  th:href="@{'/clients/' + ${offer.getClient().id} + '/creditOffers/'}">назад</a>
+                        <button type="submit" class="btn btn-primary">save</button>
+                    </div>
+
+                </div>
+            </form>
+        </td></tr>
+    </table>
+    </tbody>
+
+</div>
+</body>
+</head>
+</html>

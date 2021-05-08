@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script></head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/demo/banks">Home</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+        </thead>
+        <tbody>
+        <tr><td>
+            <form th:action="@{ ${bank.id} }"
+                  th:object="${bank}" method="post" class="form-horizontal">
+
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{id}" placeholder="id" type="hidden" class="form-control"/>
+                </div>
+
+                <div style="margin-bottom: 25px" class="input-group">
+                    <label class="form-group col-md-2">название: </label>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{name}" placeholder="name" required  class="form-control"/>
+                </div>
+                <div style="margin-inline: auto" class="form-group">
+                    <div class="col-md-auto controls">
+                        <button type="submit" class="btn btn-primary">save</button>
+                    </div>
+                </div>
+             <tr><td> <a class="btn btn btn-outline-success btn-sm" role="button" th:href="@{'/banks/'+${bank.id} + '/clients/'}">список клиентов</a>
+
+            <a class="btn btn btn-outline-success btn-sm" role="button" th:href="@{'/banks/'+${bank.id} + '/credits/'}">список кредитов</a>
+        </td>
+        </tr>
+            </form>
+
+        </td></tr>
+
+    </table>
+    </tbody>
+
+</div>
+
+
+
+</body>
+
+</head>
+
+</html>

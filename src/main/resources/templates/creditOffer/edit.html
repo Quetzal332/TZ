@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script></head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/demo/banks">Bank</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+        </thead>
+        <tbody>
+        <tr><td>
+            <form th:action="@{ ${offer.id} }"
+                  th:object="${offer}" method="post" class="form-horizontal">
+
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{id}" placeholder="id" type="hidden" class="form-control"/>
+                </div>
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{creditSum}" placeholder="id" type="hidden" class="form-control"/>
+                </div>
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{credit}" placeholder="bank" type="hidden" th:value="${credit}"  class="form-control"/>
+                </div>
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{client}" placeholder="bank" type="hidden" th:value="${client}"  class="form-control"/>
+                </div>
+                <div class="row">
+                    <h6 class="col-md-2 col-sm-1 col-xs-1">клиент: </h6>
+                    <span th:text="${offer.getClient().lastName} +' ' + ${offer.getClient().firstName}"></span>
+                </div>
+                <div class="row">
+                <h6 class="col-md-2 col-sm-1 col-xs-1">Сумма: </h6>
+                <span th:utext="${offer.creditSum}"></span>
+            </div>
+                <div class="row">
+                    <h6 class="col-md-2 col-sm-1 col-xs-1">проц. ставка: </h6>
+                    <span th:utext="${offer.credit.interestRate}"></span>
+                </div>
+                <div class="input-group">
+                    <label class="form-group col-md-2">срок кредита М.:</label>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input th:field="*{month}" placeholder="месяцев" required    class="form-control"/>
+                </div>
+
+                <div style="margin-inline: auto" class="form-group">
+                    <div class="col-md-auto controls">
+                        <a class="btn btn-outline-danger btn-sm" role="button"  th:href="@{'/clients/' + ${offer.getClient().id} + '/creditOffers/'}">к списку кредитов</a>
+                        <button type="submit" class="btn btn-primary">save</button>
+                    </div>
+                </div>
+            </form>
+        </td></tr>
+    </table>
+    </tbody>
+
+</div>
+<div>
+    <form>
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                <th>Дата платежа</th>
+                <th>Сумма платежа</th>
+                <th>тело </th>
+                <th>проценты </th>
+
+                </thead>
+                <tbody>
+                <tr th:each="graph : ${graphics}">
+
+                    <td th:text="${graph.getDatePayment()}"/>
+                    <td th:text="${graph.getSumPayment()}"/>
+                    <td th:text="${graph.getSumBody()}"/>
+                    <td th:text="${graph.getSumPercent()}"/>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </form>
+</div>
+</body>
+</head>
+</html>

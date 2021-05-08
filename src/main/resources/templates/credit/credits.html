@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script></head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/demo/banks">Banks</a>
+            <a th:object="${bank}" class="nav-item nav-link" th:href="@{'/banks/edit/' + ${bank.id}}" th:text="Bank"/>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>название</th>
+            <th>лимит</th>
+            <th>ставка</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form th:action="@{ ${bank.id} }"
+              th:object="${bank}" method="post" class="form-horizontal">
+            <tr th:each="credit : ${bank.getCredits()}">
+                <td th:text="${credit.getName()}"/>
+                <td th:text="${credit.getCreditLimit()}"/>
+                <td th:text="${credit.getInterestRate()}"/>
+                <td> <a th:href="@{'/credits/edit/' + ${credit.id}}" th:text="редактировать"/>
+                <td> <a th:href="@{'/credits/dell/' + ${credit.id}}" th:text="удалить"/>
+                </td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+
+
+    <a th:href="@{'/credits/create/' + ${bank.id}}" th:text="создать"/>
+
+</div>
+
+
+</body>
+
+
+
+</html>
