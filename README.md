@@ -12,3 +12,6 @@ Maven 3.8.1
 -------------
 	mvn clean compile
 	mvn spring-boot:run
+P.S
+-------------
+получилось немножко не красиво
